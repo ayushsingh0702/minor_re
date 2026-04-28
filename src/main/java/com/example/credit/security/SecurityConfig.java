@@ -24,10 +24,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
             .authorizeRequests()
-            .antMatchers("/auth/**").permitAll()
-            .antMatchers("/api/health").permitAll()
+            .antMatchers("/", "/api/**", "/auth/**").permitAll()
             .antMatchers("/admin/**").hasRole("ADMIN")
-            .antMatchers("/api/predict", "/user/**").hasAnyRole("USER", "CUSTOMER", "ADMIN")
+            .antMatchers("/user/**").hasAnyRole("USER", "CUSTOMER", "ADMIN")
             .anyRequest().authenticated()
             .and()
             .sessionManagement()
