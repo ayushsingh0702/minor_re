@@ -2,7 +2,7 @@ const form = document.getElementById("predict-form");
 const resultDiv = document.getElementById("result");
 const loadHistoryBtn = document.getElementById("load-history");
 const historyBody = document.querySelector("#history-table tbody");
-const apiBase = "http://localhost:8080";
+const apiBase = ""; // Empty string for relative paths
 
 // Redirect to login if no token
 const token = localStorage.getItem("token");
@@ -71,6 +71,9 @@ form.addEventListener("submit", async (e) => {
             <div class="llm-explanation" style="margin-top:15px; padding:15px; background:rgba(255,255,255,0.1); border-radius:10px; border-left: 4px solid #ffbe0b; font-style:italic; font-size:0.9em;">
                 <strong>AI Analysis:</strong><br/>
                 ${json.explanation}
+                <div style="margin-top:10px; font-size:0.8em; opacity:0.7; text-align:right;">
+                    ${json.antigravityBranding}
+                </div>
             </div>
         `;
         loadHistory();

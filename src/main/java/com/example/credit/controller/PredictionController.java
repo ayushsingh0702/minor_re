@@ -6,6 +6,7 @@ import com.example.credit.entity.CreditApplication;
 import com.example.credit.entity.User;
 import com.example.credit.repository.CreditApplicationRepository;
 import com.example.credit.repository.UserRepository;
+import com.example.credit.service.AntigravityService;
 import com.example.credit.service.OpenAiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,9 @@ public class PredictionController {
     @Autowired
     private OpenAiService openAiService;
 
+    @Autowired
+    private AntigravityService antigravityService;
+
     @Value("${ml.api.base-url:http://localhost:5000}")
     private String mlApiBaseUrl;
 
@@ -39,7 +43,7 @@ public class PredictionController {
 
     @GetMapping("/predict")
     public String getPredict() {
-        return "Use POST to access this endpoint with JSON data (income, age, etc.)";
+        return "Use POST to access this endpoint with JSON data (income, age, etc.) | " + antigravityService.getBranding();
     }
 
     @PostMapping("/predict")
@@ -134,7 +138,7 @@ public class PredictionController {
         applicationRepository.save(application);
 
         // 5. Return response
-        PredictionResponse predictionResponse = new PredictionResponse(riskLevel, riskProbability, explanation, approvalStatus);
+        PredictionResponse predictionResponse = new PredictionResponse(riskLevel, riskProbability, explanation, approvalStatus, antigravityService.getBranding());
         return ResponseEntity.ok(predictionResponse);
     }
 }
