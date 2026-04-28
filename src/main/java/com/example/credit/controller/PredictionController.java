@@ -37,6 +37,11 @@ public class PredictionController {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
+    @GetMapping("/predict")
+    public String getPredict() {
+        return "Use POST to access this endpoint with JSON data (income, age, etc.)";
+    }
+
     @PostMapping("/predict")
     public ResponseEntity<?> predict(@RequestBody PredictionRequest payload) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
