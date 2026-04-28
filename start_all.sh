@@ -14,7 +14,7 @@ sleep 1
 
 # 1. Start Flask ML Service
 echo "Starting ML Service (Flask) on port 5000..."
-cd "$PROJECT_ROOT/project/ml"
+cd "$PROJECT_ROOT/ml"
 if [ -d "venv" ]; then
     source venv/bin/activate
 else
@@ -26,14 +26,14 @@ echo "ML Service started (PID: $ML_PID)"
 
 # 2. Start Spring Boot Backend
 echo "Starting Backend (Spring Boot) on port 8080..."
-cd "$PROJECT_ROOT/project/backend"
+cd "$PROJECT_ROOT"
 nohup mvn spring-boot:run > spring.log 2>&1 &
 BACKEND_PID=$!
 echo "Backend started (PID: $BACKEND_PID)"
 
 # 3. Start Frontend via HTTP Server (avoids file:// CORS issues)
 echo "Starting Frontend Server on port 3000..."
-cd "$PROJECT_ROOT/project/frontend"
+cd "$PROJECT_ROOT/frontend"
 nohup python3 -m http.server 3000 > /dev/null 2>&1 &
 FRONTEND_PID=$!
 echo "Frontend server started (PID: $FRONTEND_PID)"
@@ -59,4 +59,4 @@ echo "   Backend:    http://localhost:8080"
 echo "   ML Service: http://localhost:5000"
 echo ""
 echo "Use 'kill $ML_PID $BACKEND_PID $FRONTEND_PID' to stop all services."
-echo "Logs: project/ml/flask.log | project/backend/spring.log"
+echo "Logs: ml/flask.log | spring.log"

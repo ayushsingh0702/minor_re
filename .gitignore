@@ -6,3 +6,15 @@ __pycache__/
 node_modules/
 .vscode/
 flask.log
+
+# Java/Maven
+target/
+*.jar
+*.war
+*.ear
+*.class
+.mvn/
+.factorypath
+.project
+.settings/
+.classpath

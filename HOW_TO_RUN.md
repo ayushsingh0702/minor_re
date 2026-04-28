@@ -25,14 +25,14 @@ sudo apt update && sudo apt install -y openjdk-17-jdk maven python3 python3-pip 
 ## 🏗️ 2. One-Time Project Setup
 ```bash
 # Setup ML
-cd project/ml
+cd ml
 python3 -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 python3 train.py
 
 # Setup Backend
-cd ../backend
+cd ..
 mvn clean install -DskipTests
 ```
 
@@ -50,15 +50,15 @@ Open 3 separate terminals:
 
 1. **Terminal 1 (ML)**:
    ```bash
-   cd project/ml && source venv/bin/activate && python3 app.py
+   cd ml && source venv/bin/activate && python3 app.py
    ```
 2. **Terminal 2 (Backend)**:
    ```bash
-   cd project/backend && mvn spring-boot:run
+   mvn spring-boot:run
    ```
 3. **Terminal 3 (Frontend)**:
    ```bash
-   cd project/frontend && python3 -m http.server 3000
+   cd frontend && python3 -m http.server 3000
    ```
 
 ---

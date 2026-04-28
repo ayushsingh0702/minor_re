@@ -278,28 +278,22 @@ pip install -r requirements.txt --upgrade
 ## FILE STRUCTURE
 
 ```
-project/
 ├── frontend/
 │   ├── index.html        (Web form & UI)
 │   ├── style.css         (Styling)
 │   └── script.js         (Form logic)
-├── backend/
-│   ├── pom.xml           (Maven config)
-│   ├── src/main/java/com/example/credit/
-│   │   ├── Application.java
-│   │   ├── Prediction.java
-│   │   ├── PredictionController.java
-│   │   └── PredictionRepository.java
-│   └── src/main/resources/
-│       └── application.properties (H2 config)
+├── src/                  (Spring Boot source)
+│   └── main/java/com/example/credit/
 ├── ml/
 │   ├── venv/             (Python virtual env)
 │   ├── train.py          (Model training)
 │   ├── app.py            (Flask API)
 │   ├── requirements.txt   (Python packages)
 │   └── model.pkl         (Trained model)
-└── database/
-    └── database.sql      (Schema reference)
+├── database/
+│   └── database.sql      (Schema reference)
+├── pom.xml               (Maven config - now at root)
+└── start_all.sh          (Automation script)
 ```
 
 ---
