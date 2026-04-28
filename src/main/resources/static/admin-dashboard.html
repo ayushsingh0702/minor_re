@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Credit Predictor</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h2>Admin Control Panel</h2>
+            </div>
+            <div class="header-right">
+                <span>Administrator</span>
+                <a href="/logout" class="btn-secondary">Logout</a>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            <div class="history-section">
+                <div class="section-header">
+                    <h3>All User Applications</h3>
+                    <button id="load-all" class="btn-primary">Refresh Data</button>
+                </div>
+                <div class="table-wrapper">
+                    <table id="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>User</th>
+                                <th>Age</th>
+                                <th>Income</th>
+                                <th>Score</th>
+                                <th>Loan</th>
+                                <th>Result</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <!-- Chatbot Widget -->
+        <div id="chatbot-widget" class="chatbot-container">
+            <div class="chatbot-header" id="chatbot-toggle">
+                <span>Admin AI Support</span>
+                <span class="toggle-icon">▲</span>
+            </div>
+            <div class="chatbot-body hidden" id="chatbot-body">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message ai">Admin Assistant ready. You can ask about system status or data analysis.</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Type a message...">
+                    <button id="send-chat" class="btn-primary">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="admin.js"></script>
+</body>
+</html>

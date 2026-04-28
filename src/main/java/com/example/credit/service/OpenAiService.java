@@ -132,6 +132,39 @@ public class OpenAiService {
         try { return (int) Double.parseDouble(val.trim()); } catch (Exception e) { return def; }
     }
 
+    public String chat(String message) {
+        if (apiKey == null || apiKey.isBlank() || "your_default_key_here".equals(apiKey)) {
+            return "I am a simulation. Please configure an OpenAI API key to talk to me properly. But I can tell you that your credit risk analysis is my priority!";
+        }
+
+        String url = "https://api.openai.com/v1/chat/completions";
+        Map<String, Object> body = new HashMap<>();
+        body.put("model", model);
+        body.put("messages", List.of(
+                Map.of("role", "system", "content", "You are a helpful financial assistant for a Credit Risk Prediction app. Help the user with their queries."),
+                Map.of("role", "user", "content", message)
+        ));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + apiKey);
+        headers.set("Content-Type", "application/json");
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
+
+        try {
+            ResponseEntity<Map> response = restTemplate.postForEntity(url, entity, Map.class);
+            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                List<Map<String, Object>> choices = (List<Map<String, Object>>) response.getBody().get("choices");
+                if (choices != null && !choices.isEmpty()) {
+                    Map<String, Object> msg = (Map<String, Object>) choices.get(0).get("message");
+                    return (String) msg.get("content");
+                }
+            }
+        } catch (Exception e) {
+            return "Chat error: " + e.getMessage();
+        }
+        return "I'm sorry, I couldn't process that request right now.";
+    }
+
     private String callOpenAi(String userData, String prediction, Double score) {
         String url = "https://api.openai.com/v1/chat/completions";
         String prompt = "You are a financial risk analyst.\n\nUser Data: " + userData +

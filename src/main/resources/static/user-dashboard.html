@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Credit Predictor</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h2>User Dashboard</h2>
+            </div>
+            <div class="header-right">
+                <span id="user-name-display">Loading...</span>
+                <a href="/logout" class="btn-secondary">Logout</a>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            <div class="predict-section">
+                <h3>New Credit Prediction</h3>
+                <form id="predict-form">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Age</label><input type="number" id="age" required></div>
+                        <div class="form-group"><label>Income</label><input type="number" id="income" required></div>
+                        <div class="form-group"><label>Credit Score</label><input type="number" id="credit_score" required></div>
+                        <div class="form-group"><label>Loan Amount</label><input type="number" id="loan_amount" required></div>
+                    </div>
+                    <button type="submit" class="btn-primary">Get Prediction</button>
+                </form>
+                <div id="result" class="result-box hidden"></div>
+            </div>
+
+            <div class="history-section">
+                <div class="section-header">
+                    <h3>Recent Predictions</h3>
+                    <button id="load-history" class="btn-secondary">Refresh</button>
+                </div>
+                <div class="table-wrapper">
+                    <table id="history-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Age</th>
+                                <th>Income</th>
+                                <th>Score</th>
+                                <th>Loan</th>
+                                <th>Result</th>
+                                <th>Risk %</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <!-- Chatbot Widget -->
+        <div id="chatbot-widget" class="chatbot-container">
+            <div class="chatbot-header" id="chatbot-toggle">
+                <span>AI Financial Assistant</span>
+                <span class="toggle-icon">▲</span>
+            </div>
+            <div class="chatbot-body hidden" id="chatbot-body">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message ai">Hello! I'm your AI assistant. How can I help you today?</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Type a message...">
+                    <button id="send-chat" class="btn-primary">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

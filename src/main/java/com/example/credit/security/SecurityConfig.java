@@ -24,14 +24,37 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
             .authorizeRequests()
-            .antMatchers("/", "/api/**", "/auth/**").permitAll()
-            .antMatchers("/admin/**").hasRole("ADMIN")
-            .antMatchers("/user/**").hasAnyRole("USER", "CUSTOMER", "ADMIN")
+            // Public paths
+            .antMatchers("/", "/login.html", "/register.html", "/auth/**", "/css/**", "/js/**", "/images/**").permitAll()
+            // Role-based paths
+            .antMatchers("/admin/**", "/admin.html", "/admin-dashboard.html").hasRole("ADMIN")
+            .antMatchers("/user/**", "/index.html", "/user-dashboard.html", "/customer.html").hasRole("USER")
+            // API paths
+            .antMatchers("/api/**").authenticated()
             .anyRequest().authenticated()
             .and()
+            .formLogin()
+                .loginPage("/login.html")
+                .loginProcessingUrl("/auth/login-form")
+                .successHandler((request, response, authentication) -> {
+                    String role = authentication.getAuthorities().iterator().next().getAuthority();
+                    if (role.equals("ROLE_ADMIN")) {
+                        response.sendRedirect("/admin-dashboard.html");
+                    } else {
+                        response.sendRedirect("/user-dashboard.html");
+                    }
+                })
+                .permitAll()
+            .and()
+            .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login.html?logout")
+                .permitAll()
+            .and()
             .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED); // Allow sessions for form login
 
+        // Still allow JWT for API calls if a token is present
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
